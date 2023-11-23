@@ -1,0 +1,48 @@
+# Name of the workflow
+name: Deploy Flask App
+
+# Specifies when the workflow should be triggered
+on:
+  # Triggers the workflow on every push
+  push:
+    # Specifies that the workflow should only be triggered on pushes to the 'main' branch
+    branches:
+      - main
+
+# Defines the jobs for the workflow
+jobs:
+  # Defines a job named 'build'
+  build:
+    # Specifies the type of virtual machine to run the job on
+    runs-on: ubuntu-latest
+
+    # Defines the steps for the job
+    steps:
+    # Step 1: Checks out the code from the repository.
+    # This step gives GitHub Actions access to the latest version of the code in the repository.
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # Step 2: Sets up QEMU, a processor emulator that allows you to run operating systems for any architecture on any architecture.
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+
+    # Step 3: Sets up Docker Buildx, a tool for building multi-platform images.
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    # Step 4: Logs in to Docker Hub, a cloud-based container registry.
+    # This step uses secrets to securely store the Docker Hub username and password.
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    # Step 5: Builds the Docker image and pushes it to Docker Hub.
+    # The image will be tagged as 'latest'.
+    - name: Build and push
+      uses: docker/build-push-action@v5
+      with:
+        push: true
+        tags: beltus/flask:latest
