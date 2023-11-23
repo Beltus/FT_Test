@@ -43,4 +43,4 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: beltus/web-frameworks/fs:latest
+          tags: beltus/web-frameworks:last
