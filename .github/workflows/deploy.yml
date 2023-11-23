@@ -18,31 +18,29 @@ jobs:
 
     # Defines the steps for the job
     steps:
-    # Step 1: Checks out the code from the repository.
-    # This step gives GitHub Actions access to the latest version of the code in the repository.
-    - name: Checkout code
-      uses: actions/checkout@v2
+      # Step 1: Checks out the code from the repository.
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    # Step 2: Sets up QEMU, a processor emulator that allows you to run operating systems for any architecture on any architecture.
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v3
+      # Step 2: Sets up QEMU.
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
 
-    # Step 3: Sets up Docker Buildx, a tool for building multi-platform images.
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
+      # Step 3: Sets up Docker Buildx.
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-    # Step 4: Logs in to Docker Hub, a cloud-based container registry.
-    # This step uses secrets to securely store the Docker Hub username and password.
-    - name: Login to Docker Hub
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
+      # Step 4: Logs in to Docker Hub.
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    # Step 5: Builds the Docker image and pushes it to Docker Hub.
-    # The image will be tagged as 'latest'.
-    - name: Build and push
-      uses: docker/build-push-action@v5
-      with:
-        push: true
-        tags: beltus/web-frameworks/fs:latest
+      # Step 5: Builds and pushes the Docker image.
+      # The image will be pushed to a private repository if the repository 'beltus/web-frameworks' is set to private on Docker Hub.
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: beltus/web-frameworks/fs:latest
