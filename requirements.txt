@@ -1,0 +1,11 @@
+flask
+
+pandas
+
+requests
+
+vaderSentiment
+
+plotly
+
+nltk
