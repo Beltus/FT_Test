@@ -9,6 +9,8 @@ app = Flask(__name__)
 def home():
 
     if request.method == 'POST':
+
+        print('Nothing')
         query = request.form['query']
 
         language = request.form['lang']
