@@ -45,4 +45,4 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         push: true
-        tags: beltus/flask:latest
+        tags: beltus/web-frameworks/fs:latest
